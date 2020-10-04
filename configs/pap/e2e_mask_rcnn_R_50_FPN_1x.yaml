@@ -1,0 +1,112 @@
+MODEL:
+  META_ARCHITECTURE: "GeneralizedRCNN"
+  WEIGHT: "e2e_mask_rcnn_R_50_FPN_1x.pth"
+  #"e2e_mask_rcnn_R_50_FPN_1x.pth"
+  #"/media/amanda/SSD1/PapSeg/maskrcnn-benchmark/relation_F150_M0_FG0.05_lr0.002500_s(30000, 45000)_b2/model_final.pth"
+  #"/media/amanda/HDD2T_2/cell-nuclei-segmentation/weight/e2e_mask_rcnn_R_50_FPN_1x.pth"
+  #"MSK1_CIAM_CIAM_GF5000_GT5000s3NO_TUNE_a0.99_la2.0_rstep4000_ra0.98_O0.0_RPNR0.0S0.0N0.0B10.0C1000.0bcemsec0.95pairTruemsedice_hint0.0_nlb_FTrueFalse0.0_lr0.005000_s(12000, 23000)_b4/model_0005000.pth" \
+  BACKBONE:
+    CONV_BODY: "R-50-FPN"
+    OUT_CHANNELS: 256
+  RPN:
+    USE_FPN: True
+    ANCHOR_STRIDE: (4, 8, 16, 32, 64)
+    PRE_NMS_TOP_N_TRAIN: 2000
+    PRE_NMS_TOP_N_TEST: 1000
+    POST_NMS_TOP_N_TEST: 1000
+    FPN_POST_NMS_TOP_N_TEST: 1000
+  ROI_HEADS:
+    USE_FPN: True
+  ROI_BOX_HEAD:
+    POOLER_RESOLUTION: 7
+    POOLER_SCALES: (0.25, 0.125, 0.0625, 0.03125)
+    POOLER_SAMPLING_RATIO: 2
+    FEATURE_EXTRACTOR: "FPN2MLPFeatureExtractor"
+    PREDICTOR: "FPNPredictor"
+  ROI_MASK_HEAD:
+    POOLER_SCALES: (0.25, 0.125, 0.0625, 0.03125)
+    FEATURE_EXTRACTOR: "MaskRCNNFPNFeatureExtractor" #POSTPROCESS_MASr
+    PREDICTOR: "MaskRCNNC4Predictor"
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 2
+    RESOLUTION: 28
+    SHARE_BOX_FEATURE_EXTRACTOR: False
+  MASK_ON: True
+  RELATION_NMS:
+    IOU_METHOD: 'n'
+    USE_RELATION_NMS: True
+    USE_IOU: False
+    MUTRELATION: False
+    FIRST_N: 90
+    THREAD: (0.1,)
+    ROI_FEAT_DIM: 1024
+    APPEARANCE_FEAT_DIM: 128
+    GEO_FEAT_DIM: 64
+    FC_DIM: (64, 16)
+    GROUP: 16
+    HID_DIM: (1024, 1024, 128)
+    CLASS_AGNOSTIC: False
+    FG_THREAD: 0.1
+#    MERGE_METHOD: 0
+    MERGE_METHOD: 0
+    POS_NMS: 0.55
+    CLS_WISE_RELATION: False
+    TOPK: 40
+    TAG: 'CIAM'
+    APPEARANCE_INTER: True
+    CONCAT: False # if True, then concate inter and intra feature, else addA
+  RELATION_MASK:
+
+    BINARY: False
+    USE_PRE_FEATURE: False
+    PRE_NORM: False
+    DEEP_SUPER: True
+    TYPE: 'CIAM' # CIAM, CAM
+    SAME_PREDICTOR: False
+    CAM: False
+    CIAM: True
+    TRAIN_CENTER_ONLY: False
+    PROTO: False
+    ALPHA: 0.5
+    RANK: True
+    XY_COOR: True
+    NORM: -1 #1 : SUM CHANNEL 2: L2 NORM -1: NO NORM
+    IOU_COOR: False
+    FEATURE_EXTRACTOR: "RoiAlignMaskFeatureExtractor" #"SameSizeRoiAlignMaskFeatureExtractor" # 'RoiAlignMaskFeatureExtractor' #'SameFeatureMask' #'RoiAlignMaskFeatureExtractor'
+    EXTRACTOR_CHANNEL: 16
+#    ROI_FEAT_DIM: 1024
+    USE_RELATION: True
+    APPEARANCE_FEAT_DIM: 128
+    GEO_FEAT_DIM:  64
+    FC_DIM: (64, 16)
+    GROUP: 16
+    HID_DIM: (1024, 1024,)
+    TOPK: 128
+    CLSWIZE: True
+  IOU_HEAD:
+    USE_IOU_MASK: False
+DATASETS:
+  TRAIN: ("papnuclei_train",)
+  TEST: ("papnuclei_val",)
+  VAL: ("papnuclei_val",)
+  GEN: ("papnuclei_gen",)
+  TRAIN_FOLD: (1, 2)
+  TEST_FOLD: (3,)
+  MODE_IN_TEST: 'val'
+  GEN_FAKE: 0
+  GEN_TRUE: 0
+  TUNE_SOURCE: False
+DATALOADER:
+  SIZE_DIVISIBILITY: 32
+SOLVER:
+  BASE_LR: 0.0025 #0.01
+  WEIGHT_DECAY: 0.0001
+  STEPS: (5000,)
+  MAX_ITER: 7000
+MT:
+  ALPHA_RAMPUP: 0.99
+  ALPHA: 0.999
+  LAMBDA: 1.
+  RAMPUP_STEP: 1000
+
+
