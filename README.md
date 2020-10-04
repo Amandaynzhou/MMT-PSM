@@ -47,6 +47,19 @@ MT.RAMPUP_STEP 250 # a warm up step to gradually increase consistency loss weigh
 MT.RAMPDOWN_STEP 250 # a rampdown step to decrease the weight at the end of training
 MT.AUG_K 2 # do k times color augmentation for unlabeled data, if MT.FLIP = True, there will be 4 augmented images with 2 color augs and 2 filpped version for each input.  
 ```
+## TESTING
+```angular2
+cd MMT-PSM
+sh scripts/test.sh
+# Hypers:
+DATASETS.MODE_IN_TEST 'test' # use 'val' or 'test' to switch the evaluation in val set/test set
+MODEL.RELATION_NMS.REG_IOU True # if use IR-Net
+```
+Evaluation metrics of AJI and mAP are used. 
+If you use AJI, a modified version of ``pycocotools`` is needed (see Installation 2.).
+
+## Future Work
+This repo may contain some useless hyperparameters. In future we will check again and remove them.
 
 ## Acknowledgement
 Our project is based on code from [Detectron](https://github.com/facebookresearch/Detectron) (version one).
