@@ -1,5 +1,8 @@
 # MMT-PSM
-Code for Deep Semi-supervised Knowledge Distillation for Overlapping Cervical Cell Instance Segmentation
+Code for [Deep Semi-supervised Knowledge Distillation for Overlapping Cervical Cell Instance Segmentation](https://arxiv.org/abs/2007.10787)
+
+[supplementary](https://arxiv.org/src/2007.10787v1/anc/supplementary.pdf)
+
 ![alt text](demo/framework.png )
 
 ## Installation
