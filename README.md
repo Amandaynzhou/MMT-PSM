@@ -50,7 +50,7 @@ MT.RAMPUP_STEP 250 # a warm up step to gradually increase consistency loss weigh
 MT.RAMPDOWN_STEP 250 # a rampdown step to decrease the weight at the end of training
 MT.AUG_K 2 # do k times color augmentation for unlabeled data, if MT.FLIP = True, there will be 4 augmented images with 2 color augs and 2 filpped version for each input.  
 ```
-## TESTING
+## Testing
 ```angular2
 cd MMT-PSM
 sh scripts/test.sh
